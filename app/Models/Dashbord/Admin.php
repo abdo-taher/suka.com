@@ -11,21 +11,17 @@ class Admin extends Authenticatable
     use HasFactory;
     protected $table = 'admins';
     protected $guard = 'admin';
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'created_at',
-        'updated_at',
-    ];
-
+    protected $guarded = [];
+    public $timestamps = true ;
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public function role(){
+        return
+            $this->belongsTo(Role::class,'role_id');
+
+    }
+
 }

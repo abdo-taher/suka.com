@@ -31,6 +31,9 @@ Auth::routes();
 
         //login route
 
+Route::get('/migrator',function (){
+
+});
 Route::get('/login', [AdminLoginController::class, 'loginPage'])->name('admin.login');
 Route::post('checkLogin', [AdminLoginController::class, 'checkLogin'])->name('admin.checkLogin');
 
