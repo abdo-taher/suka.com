@@ -14,7 +14,6 @@ function appLocale(){
     return Config::get('app.locale');
 
 }
-
 function uploadeImage($folder,$image){
     $image ->store('/',$folder);
     $filename = $image -> hashName();

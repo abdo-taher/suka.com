@@ -64,14 +64,8 @@ class vendor extends model
     // category relation
     public function category()
     {
-        return  $this -> belongsTo('App\Models\Dashbord\mainCategorie','category_id','id');
+        return  $this -> belongsTo('App\Models\mainCategorie','category_id','id');
     }
-    public function setPasswordAttribute($password){
-        if(!empty($password)){
-            $this->attributes['password'] = bcrypt($password);
-        }
-    }
-
 
 }
 

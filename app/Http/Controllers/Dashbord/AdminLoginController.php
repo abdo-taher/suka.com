@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashbord;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashbord\AdminRequest;
+use App\Models\Dashbord\Admin;
 use Illuminate\Http\Request;
 
 class AdminLoginController extends Controller
@@ -20,7 +21,7 @@ class AdminLoginController extends Controller
         if(auth()->guard('admin')->attempt(['email'=>$email,'password'=>$password],$remember_me)){
             return redirect()->route('Dashbord');
         }else{
-            return redirect()->back()->with(['error'=>'rong_input'])->withInput($request->email);
+            return redirect()->back()->with(['error'=>'rong_input'])->withInput($request->all());
         };
     }
 }

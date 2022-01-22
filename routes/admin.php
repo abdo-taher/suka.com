@@ -9,7 +9,7 @@ use App\Http\Controllers\Dashbord\subCagegories;
 use App\Http\Controllers\Dashbord\vendorsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Mcamara\LaravelLocalization\LaravelLocalization;
+use \Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
 /*
@@ -26,42 +26,25 @@ use Mcamara\LaravelLocalization\LaravelLocalization;
 define('PAGENATION_COUNT',10);
 define('AppLocale',appLocale());
 
-Auth::routes();
 
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale()  . "/admin",
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ], function(){
 
         //login route
 
-Route::get('/migrator',function (){
-
-});
 Route::get('/login', [AdminLoginController::class, 'loginPage'])->name('admin.login');
 Route::post('checkLogin', [AdminLoginController::class, 'checkLogin'])->name('admin.checkLogin');
 
 //        login done
-Route::group(['middleware'=>'auth:admin'],function(){
-    Route::get('/', [DashbordConrtroller::class, 'index'])->name('Dashbord');
+    Route::group(['middleware'=>'auth:admin'],function(){
+        Route::get('/', [DashbordConrtroller::class, 'index'])->name('Dashbord');
 
 
-//    Route::group(
-//        [
-//            'prefix' => LaravelLocalization::setLocale(),
-//            'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
-//        ], function(){
+        // categories routes
 
-
-        // languages routes
-
-    Route::group(['prefix' => 'languages'],function(){
-        Route::get('/', [LanguagesController::class, 'view'])                       ->name('admin.languages');
-        Route::get('/&{action?}', [vendorsController::class, 'select'])                       ->name('admin.selectLanguages');
-        Route::get('/crate', [LanguagesController::class, 'addForm'])                 ->name('admin.addLanguages');
-        Route::post('/store', [LanguagesController::class, 'addCheck'])  ->name('admin.addlanguagescheck');
-        Route::get('/edit/{id?}', [LanguagesController::class, 'editForm'])               ->name('admin.editLanguages');
-        Route::post('/update/{id?}', [LanguagesController::class, 'editCheck'])->name('admin.editlanguagescheck');
-        Route::get('/deletelanguage/{id?}', [LanguagesController::class, 'deletelanguage'])->name('admin.deletelanguages');
-        Route::get('/activelanguage/{id?}', [LanguagesController::class, 'activelanguage'])->name('admin.activelanguages');
-
-    });
     Route::group(['prefix' => 'main-categories'],function(){
 
         Route::get('/', [MainCategories::class, 'view'])                            ->name('admin.viewcategories');
@@ -101,9 +84,7 @@ Route::group(['middleware'=>'auth:admin'],function(){
 
 });
 
-//});
-
-
+});
 
 
 

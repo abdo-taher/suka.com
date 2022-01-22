@@ -35,7 +35,7 @@
       <form action="{{route('admin.checkLogin')}}" method="post">
           @csrf
         <div class="input-group mb-3">
-          <input name="email" type="email" class="form-control" placeholder="{{__('admin/login.email')}}">
+          <input name="email" type="email" value="{{old('email')}}" class="form-control" placeholder="{{__('admin/login.email')}}">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -53,7 +53,7 @@
         <div class="row">
           <div class="col-12">
             <div class="icheck-primary">
-              <input type="checkbox" id="remember" class="col-2">
+              <input name="remember_me" type="checkbox" id="remember" class="col-2">
               <label for="remember" class="col-10">
                   {{__('admin/login.remember-me')}}
               </label>

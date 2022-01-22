@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -20,6 +22,19 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
+
+//    public function authenticated()
+//    {
+//        if (Auth::user()->role_as == 1 ) // admin login
+//        {
+//            return redirect()->route('Dashbord')->with(['success' , 'welcome ' . Auth::user()->name ]);
+//        }
+//        elseif (Auth::user()->role_as == 0 )  // normal login
+//        {
+//            return redirect()->back()->with(['success'  , Auth::user()->name . 'you are favorite user in suka' ]);
+//        }
+//    }
 
     /**
      * Where to redirect users after login.
@@ -37,4 +52,17 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+   // public function redirectTo(){
+     //   if (Auth::user()->role_as == 1 ) //admin login
+      //  {
+       //     return 'admin';
+        //}
+        //elseif (Auth::user()->role_as == 0 )  //normal login
+      //  {
+    //        return '/';
+  //      }
+//    }
+
+
 }

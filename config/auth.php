@@ -76,6 +76,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Dashbord\Admin::class,
         ],
+        'vendor' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Dashbord\vendor::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
