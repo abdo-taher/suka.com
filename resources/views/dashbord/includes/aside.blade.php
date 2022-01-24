@@ -45,13 +45,13 @@
             </a>
             <ul class="nav nav-treeview">
             <li class="nav-item">
-                <a href="{{route('admin.viewcategories')}}" class="nav-link">
+                <a href="{{route('admin.categories',$type = "main")}}" class="nav-link">
                     <i class="far fa-eye nav-icon"></i>
                     <p>{{__('admin/aside.View-Categories')}}</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{route('admin.addcategories')}}" class="nav-link">
+                <a href="{{route('admin.createFormCategories',$type = "main")}}" class="nav-link">
                     <i class="far fa-plus-square nav-icon"></i>
                     <p>{{__('admin/aside.add-Categories')}}</p>
                 </a>
@@ -70,13 +70,13 @@
             </a>
             <ul class="nav nav-treeview">
             <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="{{route('admin.categories',$type='sub')}}" class="nav-link">
                     <i class="far fa-eye nav-icon"></i>
                     <p>{{__('admin/aside.View-sub-Categories')}}</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="{{route('admin.createFormCategories',$type='sub')}}" class="nav-link">
                     <i class="far fa-plus-square nav-icon"></i>
                     <p>{{__('admin/aside.add-sub-Categories')}}</p>
                 </a>

@@ -41,10 +41,10 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-        'mainCategorie' => [
+        'mainCategory' => [
             'driver' => 'local',
-            'root' => storage_path('assets/images/mainCategorie/'),
-            'url' => env('APP_URL').'/public',
+            'root' => storage_path('assets/image'),
+            'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
         'vendors' => [

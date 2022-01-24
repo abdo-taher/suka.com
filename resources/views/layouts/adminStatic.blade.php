@@ -39,9 +39,11 @@
     <link rel="stylesheet" href="{{asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
     <!-- Bootstrap4 Duallistbox -->
     <link rel="stylesheet" href="{{asset('assets/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css')}}">
-
-
-  <link rel="stylesheet" href="{{asset('assets/plugins/summernote/summernote-bs4.css')}}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+    <!--summernote-->
+    <link rel="stylesheet" href="{{asset('assets/plugins/summernote/summernote-bs4.css')}}">
   <!-- Google Font: Source Sans Pro -->
 
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -58,7 +60,10 @@
   <!-- Content Wrapper. Contains page content -->
     @yield('index')
     <!--category-->
-    @yield('addcat')
+    @yield('addCat')
+    @yield('viewCat')
+    @yield('detailCat')
+    @yield('editCat')
   <!-- /.content-wrapper -->
   @include('dashbord.includes.footer')
   <!-- Control Sidebar -->
@@ -83,9 +88,7 @@
 <script src="{{asset('assets/plugins/chart.js/Chart.min.js')}}"></script>
 <!-- Sparkline -->
 <script src="{{asset('assets/plugins/sparklines/sparkline.js')}}"></script>
-<!-- JQVMap -->
-<script src="{{asset('assets/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
-<script src="{{asset('assets/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
+
 <!-- jQuery Knob Chart -->
 <script src="{{asset('assets/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
 <!-- daterangepicker -->
@@ -96,14 +99,6 @@
 <script src="{{asset('assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <!-- overlayScrollbars -->
 <script src="{{asset('assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('assets/dist/js/adminlte.js')}}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{asset('assets/dist/js/pages/dashboard.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{asset('assets/dist/js/demo.js')}}"></script>
-<!-- select js -->
-<script src="{{asset('assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}"></script>
 <!-- Select2 -->
 <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
 <!-- Bootstrap4 Duallistbox -->
@@ -116,9 +111,51 @@
 <script src="{{asset('assets/plugins/daterangepicker/daterangepicker.js')}}"></script>
 <!-- bootstrap color picker -->
 <script src="{{asset('assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
+<!-- JQVMap -->
+<script src="{{asset('assets/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
+<script src="{{asset('assets/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
+
+<!-- select js -->
+<script src="{{asset('assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}"></script>
+<!-- AdminLTE App -->
+<!-- bs-custom-file-input js -->
+<script src="{{asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+<script src="{{asset('assets/dist/js/adminlte.js')}}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{{asset('assets/dist/js/pages/dashboard.js')}}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{asset('assets/dist/js/demo.js')}}"></script>
+<!-- DataTables -->
+<script src="{{asset('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <!-- ionicons -->
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        bsCustomFileInput.init();
+    });
+</script>
+<!--data tables-->
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    });
+</script>
 <script>
     $(function () {
         //Initialize Select2 Elements

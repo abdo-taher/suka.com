@@ -25,7 +25,7 @@ class CategoriesRequest extends FormRequest
     {
         return[
 
-            // 'image' => 'mimes:png,jpg,jpeg',
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif',
             'category' => 'array|min:1',
             'category.*.name' => 'required',
 

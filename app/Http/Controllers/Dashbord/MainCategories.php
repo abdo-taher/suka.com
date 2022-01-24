@@ -3,16 +3,22 @@
 namespace App\Http\Controllers\Dashbord;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashbord\CategoriesRequest;
+use App\Models\Dashbord\Category;
+use App\Models\Dashbord\CategoryTranslation;
+use App\Http\Enumerations\CategoryType;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 
 class MainCategories extends Controller
 {
     // get html for view,add,editcategories
 
-//    public function view(){
-//        $categorie = mainCategorie::select()->get();
-//        return view('pages.admin.main_categories.view',compact('categorie'));
-//    }
+    public function view($type){
+        $category = Category::OrderBy('id','DESC')->paginate(15);
+        return view('dashbord.main_categories.view',compact(['category','type']));
+    }
 //    public function select($action){
 //        if($action == 'all'){
 //            return redirect()->route('admin.viewcategories');
@@ -25,9 +31,13 @@ class MainCategories extends Controller
 //        }
 //        return view('pages.admin.main_categories.view',compact('categorie'));
 //    }
-    public function addForm(){
+    public function createForm($type){
+        return view('dashbord.main_categories.add',compact('type'));
+    }
 
-        return view('dashbord.main_categories.add');
+    public function detail($id , $type){
+        Category::where('id',$id);
+        return view('dashbord.main_categories.add',compact('type'));
     }
 //    public function editForm($id){
 //        try{
@@ -47,64 +57,41 @@ class MainCategories extends Controller
 //
 //    // check for add , editcategories
 //
-//    public function addCheck(categoriesRequest $request){
-//
-//        // add categories function
-//
-//        try {
-//            $selectDefultCat = collect($request->category);
-//            $filter = $selectDefultCat->filter(function ($value, $key) {
-//                return $value['lang'] == appLocale();
-//            });
-//            $category = array_values($filter->all())[0];
-//            $filePath = $request->has('image') ? uploadeImage('mainCategorie', $request->image) : '';
-//            DB::beginTransaction();
-//            $getId = mainCategorie::insertGetId([
-//                'name' => $category['name'],
-//                'lang_id' => $category['lang_id'],
-//                'translation_of' => 0,
-//                'slug' => $category['slug'],
-//                'image' => $filePath,
-//                'active' => $category['active']
-//            ]);
-//
-//            $filter_other = $selectDefultCat->filter(function ($value, $key) {
-//                return $value['lang'] != appLocale();
-//            });
-//
-//            // add other categories function
-//
-//            $otherCategory = array_values($filter_other->all());
-//            if (isset($otherCategory)) {
-//                $otherCat_arr = [];
-//                foreach ($otherCategory as $otherCategoryes) {
-//                    $otherCat_arr[] = [
-//                        'name' => $otherCategoryes['name'],
-//                        'lang_id' => $otherCategoryes['lang_id'],
-//                        'translation_of' => $getId,
-//                        'slug' => $otherCategoryes['slug'],
-//                        'image' => $filePath,
-//                        'active' => $otherCategoryes['active']
-//                    ];
-//                };
-//
-//
-//                mainCategorie::insert($otherCat_arr);
-//                DB::commit();
+    public function storeDb(categoriesRequest $request){
+
+        try {
+//            return $request -> image;
+//            if(isset($request -> image )){
+//                    $filePath = $request->has('image') ? uploadeImage('mainCategory',$request->image) : '' ;
+//                    $request ->image = $filePath;
 //            }
-//
-//                $alert = __('admin.success-cat-add');
-//                return redirect()->route('admin.viewcategories')->with(['success' => $alert]);
-//
-//            }
-//        catch
-//            (\Exception $ex){
-//
-//                DB::rollback();
-//                $alert = __('admin.erorr-cat-add');
-//                return redirect()->route('admin.viewcategories')->with(['erorr' => "$alert"]);
-//            }
-//    }
+
+
+//            $filePath = $request->has('image') ? uploadeImage('mainCategory', $request->image) : '';
+//            $category_id = Category::insert(['image' => $filePath]);
+        DB::beginTransaction();
+           $data = $request->except(['_token','category']);
+            $category_id = Category::insertGetId($data);
+           foreach ($request->category as $category){
+                $cat[]=[
+                    'name' => $category['name'],
+                    'locale' => $category['locale'],
+                    'category_id' => $category_id,
+               ];
+           }
+            CategoryTranslation::insert($cat);
+        DB::commit();
+               $alert = __('admin/category/add.success-cat-add');
+               return redirect()->route('admin.categories')->with(['success' => $alert]);
+           }
+       catch
+           (\Exception $ex){
+        DB::rollback();
+        return $ex;
+               $alert = __('admin/category/add.erorr-cat-add');
+               return redirect()->route('admin.categories')->with(['erorr' => $alert]);
+           }
+    }
 //    public function editCheck( $id,  categoriesRequest   $request){
 //        if(!$id){
 //            $alert = __('admin.erorr-cat-edit') ;

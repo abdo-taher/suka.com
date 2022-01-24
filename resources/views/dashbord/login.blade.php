@@ -18,7 +18,7 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body class="hold-transition login-page " style="text-align:{{AppLocale == 'ar' ? 'right' : ''}}">
+<body class="hold-transition login-page " style="text-align:{{appLocale() == 'ar' ? 'right' : ''}}">
 <div class="login-box">
   <div class="login-logo">
     <span><b>{{__('admin/login.dis1')}}</b>{{__('admin/login.dis2')}}</span>

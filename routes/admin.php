@@ -23,8 +23,7 @@ use \Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
-define('PAGENATION_COUNT',10);
-define('AppLocale',appLocale());
+
 
 
 Route::group(
@@ -45,17 +44,17 @@ Route::post('checkLogin', [AdminLoginController::class, 'checkLogin'])->name('ad
 
         // categories routes
 
-    Route::group(['prefix' => 'main-categories'],function(){
+    Route::group(['prefix' => 'categories'],function(){
 
-        Route::get('/', [MainCategories::class, 'view'])                            ->name('admin.viewcategories');
-        Route::get('/&{action?}', [MainCategories::class, 'select'])                       ->name('admin.selectcategories');
-        Route::get('/add', [MainCategories::class, 'addForm'])                      ->name('admin.addcategories');
-        Route::post('/addlanguagescheck', [MainCategories::class, 'addCheck'])       ->name('admin.addcategoriescheck');
-        Route::get('edit/{id?}', [MainCategories::class, 'editForm'])                    ->name('admin.editcategories');
-        Route::post('/editCategorieCheck/{id?}', [MainCategories::class, 'editCheck'])     ->name('admin.editcategoriescheck');
-        Route::get('/deleteMainCat/{id?}', [MainCategories::class, 'deleteCategorie'])     ->name('admin.deletecategories');
-        Route::get('/activeMainCat/{id?}', [MainCategories::class, 'activeCategorie'])     ->name('admin.activecategories');
-
+        Route::get('/{type?}/', [MainCategories::class, 'view'])                 ->name('admin.categories');
+        Route::get('/&{action?}', [MainCategories::class, 'select'])     ->name('admin.selectCategories');
+        Route::get('/detail/{type?}', [MainCategories::class, 'detail'])     ->name('admin.detailCategories');
+        Route::get('/{type?}/create', [MainCategories::class, 'createForm'])     ->name('admin.createFormCategories');
+        Route::post('/store', [MainCategories::class, 'storeDb'])        ->name('admin.storeCategories');
+        Route::get('edit/{id?}', [MainCategories::class, 'editForm'])    ->name('admin.editCategories');
+        Route::post('/update/{id?}', [MainCategories::class, 'updateDb'])->name('admin.updateCategories');
+        Route::get('/delete/{id?}', [MainCategories::class, 'delete'])   ->name('admin.deleteCategories');
+        Route::get('/isActive/{id?}', [MainCategories::class, 'isActive'])->name('admin.activeCategories');
     });
     Route::group(['prefix' => 'vendors'],function(){
 

@@ -16,9 +16,8 @@ function appLocale(){
 }
 function uploadeImage($folder,$image){
     $image ->store('/',$folder);
-    $filename = $image -> hashName();
-    $path = 'images/' .  $folder . '/' . $filename ;
-    return $path;
+    $fileName = $image -> hashName();
+        return $fileName;
 }
 
 function mainCategoriesActive(){
