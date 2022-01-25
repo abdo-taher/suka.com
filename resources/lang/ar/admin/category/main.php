@@ -24,7 +24,7 @@ return [
 
     // add categories
     // success
-    'success-cat-add' => 'تم ادخال القسم بنجاح',
+
     'success-cat-edit' => 'تم تعديل القيم بنجاح',
     'success-cat-delete' => 'تم حذف القسم بنجاح',
     'success-cat-active' => 'تم تنشيط القسم بنجاح',
@@ -93,7 +93,9 @@ return [
     // delete categories
     'Modal-delete-cat-title' => 'حذف قسم رئيسي',
     'Modal-delete-cat-body' => 'هل تريد حذف ',
-
+    // active action
+    'is_active' =>'تنشيط الغاء ',
+    'is_inactive' =>'تنشيط ',
 
 
 ];

@@ -24,6 +24,7 @@ return[
 //    label for input
     'main_category' => 'Main Category',
     'name' => 'Name',
+    'description' => 'Description',
     'Slug' => 'Slug' ,
     'notice_locale' => 'Notice',
     'notice_locale_contact_en' => 'This data will be recorded in Arabic',
@@ -31,9 +32,15 @@ return[
 //    placeholder
     'slug_ph' => 'Slug For Category',
     'name_ph' => 'Name For Category',
+    'description_ph' => 'Description For Category',
     'mainCategoryPh' => 'Choose Main Category',
 
 //    footer card
     'submit' => 'Add This category',
     'Cancel' => 'Cancel',
+
+//    notice
+
+    'success-cat-add' => 'Add category will done',
+    'error-cat-add' => 'Add category will filed',
 ];

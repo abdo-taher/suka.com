@@ -22,7 +22,7 @@
 
         <!-- Main content -->
         <div>
-        <form method="POST"  action="{{route('admin.storeCategories')}}" >
+        <form method="POST"  action="{{route('admin.storeCategories')}}" enctype="multipart/form-data">
             <hr>
             @csrf
             @if($type == "sub")
@@ -33,13 +33,14 @@
                     <div class="form-group">
                         <select name="parent_id" class="form-control select2bs4" style="width: 100%;">
                             <option selected="selected">{{__('admin/category/add.mainCategoryPh')}}</option>
-                            <option value="Alabama" >Alabama</option>
+                            @foreach($category as $categories)
+                            <option value="{{$categories ->id}}" >{{$categories -> name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     @error ("parent_id")
                     <div class="alert alert-danger">{{$message}}</div>
                     @enderror
-                    <input hidden name="type" value="sub">
                 </div>
             </div>
             @endif
@@ -48,6 +49,8 @@
                 <div class="form-group">
                     <label class="col-12 text-center">{{__("admin/category/add.Slug")}}</label>
                     <input  name="slug" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__('admin/category/add.slug_ph')}}">
+                    <input hidden  name="admin_create" value="{{Auth::user()->name}}">
+                    <input hidden name="type" value="sub">
                     @error ("slug")
                     <div class="alert alert-danger">{{$message}}</div>
                     @enderror
@@ -96,6 +99,13 @@
                                         <label>{{__("admin/category/add.name")}}</label>
                                         <input  name="category[{{$localeCode}}][name]" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__("admin/category/add.name_ph")}}">
                                         <input hidden name="category[{{$localeCode}}][locale]"  value="{{$localeCode}}">
+{{--                                        @error ("name")--}}
+{{--                                        <div class="alert alert-danger">{{$message}}</div>--}}
+{{--                                        @enderror--}}
+                                    </div>
+                                        <div class="form-group">
+                                        <label>{{__("admin/category/add.description")}}</label>
+                                        <input  name="category[{{$localeCode}}][description]" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__("admin/category/add.description_ph")}}">
 {{--                                        @error ("name")--}}
 {{--                                        <div class="alert alert-danger">{{$message}}</div>--}}
 {{--                                        @enderror--}}

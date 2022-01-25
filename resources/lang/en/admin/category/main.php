@@ -39,7 +39,9 @@ return [
     // delete categories
     'Modal-delete-cat-title' => 'Delete Categories',
     'Modal-delete-cat-body' => 'Are you need to delete ',
-    // category end
+    // active action
+    'is_active' =>'Active ',
+    'is_inactive' =>'Inactive ',
 
 //    view table
 

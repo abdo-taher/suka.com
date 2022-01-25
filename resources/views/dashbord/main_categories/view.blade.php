@@ -15,13 +15,34 @@
                             <li class="breadcrumb-item active">{{__('admin/category/main.cat-' .$type)}}</li>
                         </ol>
                     </div>
-
                 </div>
             </div><!-- /.container-fluid -->
         </section>
+    <div class="col-12">
+        @include('layouts.alert')
+    </div>
     <div class="card">
-        <div class="card-header text-center">
-            <button class="btn-block btn-primary text-center">{{__('admin/category/main.add-cat-'.$type)}}</button>
+        <div class="card-header text-center col-12">
+            <button class="btn btn-primary text-center float-left">
+                <i class="fas fa-plus"></i>
+                {{__('admin/category/main.add-cat-'.$type)}}
+            </button>
+            <div class="float-right">
+                <td class="text-right py-0 align-middle">
+                    <div class="btn-group btn-group-sm">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right text-center" role="menu">
+                                <a href="{{route('admin.categories',$type)}}" class="dropdown-item">كل الاقسام الفرعية</a>
+                                <a href="{{route('admin.selectCategories',[$type,$action='active'])}}" class="dropdown-item">الاقسام النشطة</a>
+                                <a href="{{route('admin.selectCategories',[$type,$action='inactive'])}}" class="dropdown-item">الاقسام الغير نشطة</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </td>
+            </div>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -49,21 +70,25 @@
                                 <td><img class="img-circle" style="height: 80px ; width:80px" src="{{ asset('assets\image\avatar2.png')}}" alt=""></td>
                                 <td>{{$categories->slug}}</td>
                                 <td style="color:{{$categories->is_active == 0 ? '#0E9A00' : '#8c0615'}}">
-                                    @if($categories->is_active == 0)
-                                    <span class='badge badge-success'>{{__('admin/category/main.active')}}</span>
-                                    @else
-                                    <span class='badge badge-danger'>{{__('admin/category/main.inactive')}}</span>
-                                    @endif
+                                    <span class='badge badge-{{statusColor($categories->is_active)}}'>{{__('admin/category/main.'.status($categories->is_active))}}</span>
                                 <td class="text-right py-0 align-middle">
                                     <div class="btn-group btn-group-sm">
-
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right text-center" role="menu">
-                                                <a href="#" class="dropdown-item">{{__('admin/category/main.detail') . $categories->name}}</a>
+
+                                                <a href="{{route('admin.detailCategories',[$type,$categories->id])}}" class="dropdown-item">
+                                                    {{__('admin/category/main.detail') . $categories->name}}</a>
+
                                                 <a href="#" class="dropdown-item">{{__('admin/category/main.edit') .$categories->name}}</a>
-                                                <a href="#" class="dropdown-item">{{__('admin/category/main.delete') .$categories->name}}</a>
+
+                                                <a href="{{route('admin.isActiveCategories',[$type,$categories->id])}}" class="dropdown-item">
+                                                    {{__('admin/category/main.is_'.status($categories->is_active)) .$categories->name}}</a>
+
+                                                <a href="{{route('admin.deleteCategories',[$type,$categories->id])}}" class="dropdown-item">
+                                                    {{__('admin/category/main.delete') .$categories->name}}</a>
+
                                             </div>
                                         </div>
 

@@ -20,6 +20,14 @@ function uploadeImage($folder,$image){
         return $fileName;
 }
 
+function status($vall){
+    return $vall == 1 ? 'active' : 'inactive';
+}
+
+function statusColor($vall){
+    return $vall == 1 ? 'success' : 'danger';
+}
+
 function mainCategoriesActive(){
     return mainCategorie::where('translation_of',0)->active()->get();
 }

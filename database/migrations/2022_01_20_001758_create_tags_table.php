@@ -16,6 +16,13 @@ class CreateTagsTable extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table ->increments('id');
             $table ->string('slug')->unique();
+            $table ->integer('category_id')->nullable()->unsigned();
+            $table ->integer('product_id')->nullable()->unsigned();
+            $table ->integer('brand_id')->nullable()->unsigned();
+            $table->unique(['category_id','product_id','brand_id']);
+            $table ->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table ->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table ->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
             $table ->timestamps();
         });
     }

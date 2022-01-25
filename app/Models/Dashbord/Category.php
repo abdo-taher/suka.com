@@ -13,7 +13,7 @@ class Category extends Model
     protected $with = ['translations'];
     protected  $translatedAttributes = ['name'];
     protected $table = 'categories';
-    protected $fillable =['parent_id','slug','is active','image'];
+    protected $fillable =['parent_id','slug','is active','image','admin_create'];
     protected $hidden = ['translations'];
     protected $casts = ['is_active' => 'boolean'];
 
@@ -25,12 +25,12 @@ class Category extends Model
     public function scopeChild($query){
         return $query->whereNotNull('parent_id');
     }
-    public function getActive(){
-        return $this -> is_active == 0 ? __('admin/category/main.active') : __('admin/category/main.inactive') ;
-    }
 
 
     public function  scopeActive($query){
+        return $query->where('is_active',1);
+    }
+    public function  scopeInactive($query){
         return $query->where('is_active',1);
     }
     public function catChild(){
@@ -38,6 +38,14 @@ class Category extends Model
     }
     public function  product(){
         $this ->belongsTo(Product::class,'product_categories');
+    }
+    public function getTranslationRelationKey(): string
+    {
+        if ($this->translationForeignKey) {
+            return $this->translationForeignKey;
+        }
+
+        return $this->getForeignKey();
     }
 
 }

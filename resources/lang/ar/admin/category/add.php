@@ -25,16 +25,23 @@ return[
     'main_category' => 'القسم الرئيسي',
     'name' => 'الاسم',
     'Slug' => 'الاختصار' ,
+    'description' => 'الوصف' ,
     'notice_locale' => 'تحذير',
     'notice_locale_contact_en' => 'سيتم حفظ القسم باللغة الانجليزية',
     'notice_locale_contact_ar' => 'سيتم حفظ القسم باللغة العربية',
 //    placeholder
     'slug_ph' => 'اختصار القسم',
     'name_ph' => 'اسم القسم',
+    'description_ph' => 'وصف القسم',
     'mainCategoryPh' => 'اختر القسم الرئيسي',
 
 //    footer card
     'submit' => 'اضافة القسم',
     'Cancel' => 'اغلاق',
+
+//    notice
+
+    'success-cat-add' => 'تم إضافة القسم بنجاح',
+    'error-cat-add' => 'لم يتم إضافة القسم بنجاح',
 
 ];

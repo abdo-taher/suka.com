@@ -47,14 +47,14 @@ Route::post('checkLogin', [AdminLoginController::class, 'checkLogin'])->name('ad
     Route::group(['prefix' => 'categories'],function(){
 
         Route::get('/{type?}/', [MainCategories::class, 'view'])                 ->name('admin.categories');
-        Route::get('/&{action?}', [MainCategories::class, 'select'])     ->name('admin.selectCategories');
-        Route::get('/detail/{type?}', [MainCategories::class, 'detail'])     ->name('admin.detailCategories');
+        Route::get('/{type?}/{action?}', [MainCategories::class, 'select'])     ->name('admin.selectCategories');
+        Route::get('/detail/{type?}/{id?}', [MainCategories::class, 'detail'])     ->name('admin.detailCategories');
         Route::get('/{type?}/create', [MainCategories::class, 'createForm'])     ->name('admin.createFormCategories');
         Route::post('/store', [MainCategories::class, 'storeDb'])        ->name('admin.storeCategories');
-        Route::get('edit/{id?}', [MainCategories::class, 'editForm'])    ->name('admin.editCategories');
+        Route::get('edit/{type?}/{id?}', [MainCategories::class, 'editForm'])    ->name('admin.editCategories');
         Route::post('/update/{id?}', [MainCategories::class, 'updateDb'])->name('admin.updateCategories');
-        Route::get('/delete/{id?}', [MainCategories::class, 'delete'])   ->name('admin.deleteCategories');
-        Route::get('/isActive/{id?}', [MainCategories::class, 'isActive'])->name('admin.activeCategories');
+        Route::get('/delete/{type?}/{id?}', [MainCategories::class, 'delete'])   ->name('admin.deleteCategories');
+        Route::get('/isActive/{type?}/{id?}', [MainCategories::class, 'isActive'])->name('admin.activeCategories');
     });
     Route::group(['prefix' => 'vendors'],function(){
 

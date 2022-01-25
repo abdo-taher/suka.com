@@ -17,10 +17,10 @@ class CreateCategoriesTable extends Migration
             $table->increments('id');
             $table ->integer('parent_id')->nullable()->unsigned();
             $table ->string('slug')->unique();
+            $table ->string('admin_create')->unique();
             $table ->text('image');
             $table ->boolean('is_active')->nullable()->default('0');
             $table->timestamps();
-
             $table ->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
 
         });

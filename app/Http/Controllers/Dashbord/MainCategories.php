@@ -16,28 +16,34 @@ class MainCategories extends Controller
     // get html for view,add,editcategories
 
     public function view($type){
-        $category = Category::OrderBy('id','DESC')->paginate(15);
+       $category = $type == 'main' ? Category::OrderBy('id','DESC')->where('parent_id',null)->paginate(15) :
+                    Category::OrderBy('id','DESC')->where('parent_id',true)->paginate(15);
+
         return view('dashbord.main_categories.view',compact(['category','type']));
     }
-//    public function select($action){
-//        if($action == 'all'){
-//            return redirect()->route('admin.viewcategories');
-//        }if($action == 'main'){
-//            $categorie = mainCategorie::where('translation_of',0)->get();
-//        }if($action == 'active'){
-//            $categorie = mainCategorie::active()->get();
-//        }if($action == 'inactive'){
-//            $categorie = mainCategorie::where('active',0)->get();
-//        }
-//        return view('pages.admin.main_categories.view',compact('categorie'));
-//    }
+    public function select($type , $action){
+        try{
+        if($action == 'active'){
+            $category = $type == 'main' ? Category::OrderBy('id','DESC')->where('parent_id',null)->where('is_active',1)->paginate(15) :
+                    Category::OrderBy('id','DESC')->where('parent_id',true)->paginate(15);
+        }if($action == 'inactive'){
+            $category = $type == 'main' ? Category::OrderBy('id','DESC')->where('parent_id',null)->where('is_active',0)->paginate(15) :
+                Category::OrderBy('id','DESC')->where('parent_id',true)->paginate(15);
+        }
+        return view('dashbord.main_categories.view',compact(['category','type']));
+        }catch (\Exception $ex){
+         return redirect()->route('admin.categories',$type);
+        }
+
+    }
     public function createForm($type){
-        return view('dashbord.main_categories.add',compact('type'));
+        $category = Category::select('id','parent_id')->get();
+        return view('dashbord.main_categories.add',compact(['type','category']));
     }
 
-    public function detail($id , $type){
-        Category::where('id',$id);
-        return view('dashbord.main_categories.add',compact('type'));
+    public function detail($type,$id ){
+        $category = Category::orderBy('id', 'DESC')->find($id);
+        return view('dashbord.main_categories.detail',compact(['category','type']));
     }
 //    public function editForm($id){
 //        try{
@@ -58,7 +64,6 @@ class MainCategories extends Controller
 //    // check for add , editcategories
 //
     public function storeDb(categoriesRequest $request){
-
         try {
 //            return $request -> image;
 //            if(isset($request -> image )){
@@ -70,11 +75,12 @@ class MainCategories extends Controller
 //            $filePath = $request->has('image') ? uploadeImage('mainCategory', $request->image) : '';
 //            $category_id = Category::insert(['image' => $filePath]);
         DB::beginTransaction();
-           $data = $request->except(['_token','category']);
+           $data = $request->except(['_token','category','type']);
             $category_id = Category::insertGetId($data);
            foreach ($request->category as $category){
                 $cat[]=[
                     'name' => $category['name'],
+                    'description' => $category['description'],
                     'locale' => $category['locale'],
                     'category_id' => $category_id,
                ];
@@ -82,14 +88,14 @@ class MainCategories extends Controller
             CategoryTranslation::insert($cat);
         DB::commit();
                $alert = __('admin/category/add.success-cat-add');
-               return redirect()->route('admin.categories')->with(['success' => $alert]);
+               return redirect()->route('admin.categories',$request->type)->with(['success' => $alert]);
            }
        catch
            (\Exception $ex){
         DB::rollback();
         return $ex;
                $alert = __('admin/category/add.erorr-cat-add');
-               return redirect()->route('admin.categories')->with(['erorr' => $alert]);
+               return redirect()->route('admin.categories',$request->type)->with(['erorr' => $alert]);
            }
     }
 //    public function editCheck( $id,  categoriesRequest   $request){
