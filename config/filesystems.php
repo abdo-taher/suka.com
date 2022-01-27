@@ -43,7 +43,7 @@ return [
         ],
         'mainCategory' => [
             'driver' => 'local',
-            'root' => storage_path('assets/image'),
+            'root' => storage_path('assets/image/mainCategory'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],

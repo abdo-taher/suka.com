@@ -15,10 +15,13 @@ class CreateCategoryUpdatesTable extends Migration
     {
         Schema::create('category_updates', function (Blueprint $table) {
             $table ->increments('id');
-            $table ->integer('category_id');
-            $table ->string('change_from');
-            $table ->string('admin_change');
-            $table ->string('change_to');
+            $table ->string('update_from');
+            $table ->string('update_to');
+            $table ->integer('category_id')->unsigned();
+            $table ->integer('admin_create')->unsigned();
+            $table ->unique(['category_id','admin_create']);
+            $table ->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table ->foreign('admin_create')->references('id')->on('admins')->onDelete('cascade');
             $table ->timestamps();
         });
     }
