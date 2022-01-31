@@ -22,10 +22,11 @@
 
         <!-- Main content -->
         <div>
-        <form method="POST"  action="{{route('admin.storeCategories')}}" enctype="multipart/form-data">
+        <form method="POST"  action="{{route('admin.storeCategories',$type)}}" enctype="multipart/form-data">
             <hr>
             @csrf
             @if($type == "sub")
+                <input name="parent" id="parent">
             <div class="col-md-12">
                 <div class="form-group">
                     <label class="col-12 text-center">
@@ -39,7 +40,9 @@
                         </select>
                     </div>
                     @error ("parent_id")
-                    <div class="alert alert-danger">{{$message}}</div>
+                    <blockquote class="quote-danger">
+                        <p style="color: #dc3545"> {{$message}}</p>
+                    </blockquote>
                     @enderror
                 </div>
             </div>
@@ -50,9 +53,10 @@
                     <label class="col-12 text-center">{{__("admin/category/add.Slug")}}</label>
                     <input  name="slug" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__('admin/category/add.slug_ph')}}">
                     <input hidden  name="admin_create" value="{{Auth::user()->name}}">
-                    <input hidden name="type" value="sub">
                     @error ("slug")
-                    <div class="alert alert-danger">{{$message}}</div>
+                    <blockquote class="quote-danger">
+                        <p style="color: #dc3545"> {{$message}}</p>
+                    </blockquote>
                     @enderror
                 </div>
             </div>
@@ -68,7 +72,9 @@
                     </div>
                 </div>
                 @error ("image")
-                <div class="alert alert-danger">{{$message}}</div>
+                <blockquote class="quote-danger">
+                    <p style="color: #dc3545"> {{$message}}</p>
+                </blockquote>
                 @enderror
             </div>
             <hr>
@@ -99,16 +105,20 @@
                                         <label>{{__("admin/category/add.name")}}</label>
                                         <input  name="category[{{$localeCode}}][name]" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__("admin/category/add.name_ph")}}">
                                         <input hidden name="category[{{$localeCode}}][locale]"  value="{{$localeCode}}">
-{{--                                        @error ("name")--}}
-{{--                                        <div class="alert alert-danger">{{$message}}</div>--}}
-{{--                                        @enderror--}}
+                                        @error('category[{{$localeCode}}][name]')
+                                        <blockquote class="quote-danger">
+                                            <p style="color: #dc3545"> {{$message}}</p>
+                                        </blockquote>
+                                        @enderror
                                     </div>
                                         <div class="form-group">
                                         <label>{{__("admin/category/add.description")}}</label>
                                         <input  name="category[{{$localeCode}}][description]" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__("admin/category/add.description_ph")}}">
-{{--                                        @error ("name")--}}
-{{--                                        <div class="alert alert-danger">{{$message}}</div>--}}
-{{--                                        @enderror--}}
+                                            @error('category[{{$localeCode}}][description]')
+                                            <blockquote class="quote-danger">
+                                                <p style="color: #dc3545"> {{$message}}</p>
+                                            </blockquote>
+                                            @enderror
                                     </div>
                                 </div>
                             </div>

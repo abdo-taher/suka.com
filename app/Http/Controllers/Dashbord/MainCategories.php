@@ -17,8 +17,8 @@ class MainCategories extends Controller
 
     public function view($type){
         if ($type){
-       $category = $type == 'main' ? Category::OrderBy('id','DESC')->where('parent_id',null)->paginate(15) :
-                    Category::OrderBy('id','DESC')->paginate(15)->where('parent_id',true);
+       $category = $type == 'main' ? Category::OrderBy('id','DESC')->where('parent_id',null)->paginate(20) :
+                    Category::OrderBy('id','DESC')->paginate(20)->where('parent_id',true);
 
         return view('dashbord.main_categories.view',compact(['category','type']));
         }else{
@@ -44,19 +44,18 @@ class MainCategories extends Controller
         $category = Category::select('id','parent_id')->get();
         return view('dashbord.main_categories.add',compact(['type','category']));
     }
-
     public function detail($type,$id ){
         $category = Category::orderBy('id', 'DESC')->find($id);
         return view('dashbord.main_categories.detail',compact(['category','type']));
     }
-    public function editForm($type , $id){
+    public function editForm($type , $slug){
         try{
-            $category  = Category::select()->find($id);
-             if($category){
-            $allCategory = Category::orderBy('id', 'DESC')->get();
-            $catTrans = CategoryTranslation::where('category_id',$id)->select()->get();
-            return view('dashbord.main_categories.edit',compact(['category','catTrans','allCategory','type']));
-             }
+
+            $type == 'sub' ? $catSelect = Category::orderBy('id', 'DESC')->get() : '';
+            $category = Category::orderBy('id', 'DESC')->where('slug',$slug)->get();
+            $catTrans = CategoryTranslation::where('category_id',$category[0]->id)->select()->get();
+            return view('dashbord.main_categories.edit',compact(['catSelect','category','catTrans','type']));
+
         }catch(Exception $ex){
             $alert = __('admin.error-cat-edit') ;
             return redirect()->route('admin.categories')->with(['error' => $alert]);
@@ -66,17 +65,15 @@ class MainCategories extends Controller
 
 //    // check for add , editcategories
 
-    public function storeDb(categoriesRequest $request){
+    public function storeDb(categoriesRequest $request , $type){
         try {
-
             if(isset($request -> image )){
-                $filePath = $request->has('image') ? uploadeImage('mainCategory',$request->image) : '' ;
-                $category_id = Category::insert(['image'=>$filePath]);
+                $request -> image = $request->has('image') ? uploadeImage('mainCategory',$request->image) : '' ;
             }
-
         DB::beginTransaction();
-           $data = $request->except(['_token','category','type','image']);
-            $category_id->insertGetId($data);
+           $data = $request->except(['_token','category']);
+            $category_id = Category::insertGetId($data);
+            $cat = [];
            foreach ($request->category as $category){
                 $cat[]=[
                     'name' => $category['name'],
@@ -86,51 +83,43 @@ class MainCategories extends Controller
                ];
            }
             CategoryTranslation::insert($cat);
+
         DB::commit();
                $alert = __('admin/category/add.success-cat-add');
-               return redirect()->route('admin.categories',$request->type)->with(['success' => $alert]);
-           }
-       catch
-           (\Exception $ex){
-        DB::rollback();
-        return $ex;
+               return redirect()->route('admin.categories',$type)->with(['success' => $alert]);
+           }catch(\Exception $ex){
+           return $ex;
+       DB::rollback();
                $alert = __('admin/category/add.error-cat-add');
-               return redirect()->route('admin.categories',$request->type)->with(['error' => $alert]);
+               return redirect()->route('admin.categories',$type)->with(['error' => $alert]);
            }
     }
 
-    public function updateDb($id,  categoriesRequest   $request){
-//        foreach ($request->old_value as $old_value){
-//            $data[]=$old_value->toArray();
-//        }
+    public function updateDb($type,$id,categoriesRequest $request){
 
-return $request->category;
+        try{
+            if($id){
+                $updateCat = Category::find($id);
+                $updateCat->update($request->except(['_token','category','type','image']));
+                if(isset($request -> image )){
+                    $filePath = $request->has('image') ? uploadeImage('mainCategory',$request->image) : '' ;
+                    $updateCat->update(['image'=>$filePath]);
+                }
 
-//        try{
-//            if($id){
-//                $id = $old_value->id;
-//                $updateCat = Category::find($id);
-//                $updateCat->update($request->except(['_token','category','type','image']));
-//                if(isset($request -> image )){
-//                    $filePath = $request->has('image') ? uploadeImage('mainCategory',$request->image) : '' ;
-//                    $updateCat->update(['image'=>$filePath]);
-//                }
-//
-//                foreach($request->category as  $category){
-//                    CategoryTranslation::where('id',$category['id'])->update([
-//                    'name'=>$category['name'],
-//                    'description'=> $category['description']
-//                    ]);
-//                }
-//            $alert = __('admin.success-cat-add') ;
-//            return dd($request->query());
-//            return redirect()->route('admin.categories',$request->type)->with(['success' => $alert]);
-//            }
-//        }catch(\Exception $ex){
-//return $ex;
-//            $alert = __('admin.error-cat-edit') ;
-//            return redirect()->route('admin.categories',$request->type)->with(['error'=>$alert]);
-//        }
+                foreach($request->category as  $category){
+                    CategoryTranslation::where('id',$category['id'])->update([
+                    'name'=>$category['name'],
+                    'description'=> $category['description']
+                    ]);
+                }
+            $alert = __('admin.success-cat-add') ;
+            return redirect()->route('admin.categories',$type)->with(['success' => $alert]);
+            }
+        }catch(\Exception $ex){
+return $ex;
+            $alert = __('admin.error-cat-edit') ;
+            return redirect()->route('admin.categories',$type)->with(['error'=>$alert]);
+        }
     }
     public function isActive($type , $id){
         $category = Category::find($id);

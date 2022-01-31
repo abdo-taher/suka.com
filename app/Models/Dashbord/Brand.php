@@ -2,10 +2,29 @@
 
 namespace App\Models\Dashbord;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use phpDocumentor\Reflection\Types\Self_;
 
-class Brand extends Model
+class brand extends Model
 {
-    use HasFactory;
+    use Translatable;
+
+    protected $with = ['translations'];
+    protected  $translatedAttributes = ['name','description','locale'];
+    protected $table = 'brands';
+    protected $fillable =['slug','image','admin_create'];
+    protected $hidden = ['translations'];
+    protected $casts = ['is_active' => 'boolean'];
+
+
+    public function getTranslationRelationKey(): string
+    {
+        if ($this->translationForeignKey) {
+            return $this->translationForeignKey;
+        }
+
+        return $this->getForeignKey();
+    }
+
 }

@@ -43,19 +43,19 @@ return [
         ],
         'mainCategory' => [
             'driver' => 'local',
-            'root' => storage_path('assets/image/mainCategory'),
+            'root' => public_path('assets/image/mainCategory'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
         'vendors' => [
             'driver' => 'local',
-            'root' => storage_path('assets/images/vendors/'),
+            'root' => storage_path('assets/image/vendors'),
             'url' => env('APP_URL').'/public',
             'visibility' => 'public',
         ],
-        'subCategorie' => [
+        'brand' => [
             'driver' => 'local',
-            'root' => storage_path('assets/images/subCategorie/'),
+            'root' => public_path('assets/image/brand'),
             'url' => env('APP_URL').'/public',
             'visibility' => 'public',
         ],

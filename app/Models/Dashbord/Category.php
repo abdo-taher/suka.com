@@ -11,7 +11,7 @@ class Category extends Model
     use Translatable;
 
     protected $with = ['translations'];
-    protected  $translatedAttributes = ['name'];
+    protected  $translatedAttributes = ['name','description','locale'];
     protected $table = 'categories';
     protected $fillable =['parent_id','slug','is active','image','admin_create'];
     protected $hidden = ['translations'];

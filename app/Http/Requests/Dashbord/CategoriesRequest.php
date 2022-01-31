@@ -25,7 +25,9 @@ class CategoriesRequest extends FormRequest
     {
         return[
 
-            'image' => 'required|image|mimes:jpeg,jpg,png,gif',
+            'slug' => 'required|unique:categories,slug,'.$this->id,
+            'image' => 'required_without:id|mimes:jpeg,jpg,png,gif',
+            'parent_id' => 'required_with:parent_id|exists:Categories,id',
             'category' => 'array|min:1',
             'category.*.name' => 'required',
 

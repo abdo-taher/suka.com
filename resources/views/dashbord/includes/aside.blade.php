@@ -218,13 +218,13 @@
             </a>
             <ul class="nav nav-treeview">
             <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="{{route('admin.brands')}}" class="nav-link">
                     <i class="far fa-eye nav-icon"></i>
                     <p>{{__('admin/aside.View-brands')}}</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="{{route('admin.createFormBrands')}}" class="nav-link">
                     <i class="far fa-plus-square nav-icon"></i>
                     <p>{{__('admin/aside.add-brands')}}</p>
                 </a>

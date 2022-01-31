@@ -90,7 +90,7 @@
                                                 </button>
                                             <!--edit action-->
                                                 <button type="button" class="btn btn-default" >
-                                                <a href="{{route('admin.editCategories',[$type,$categories->id])}}" class="dropdown-item"><i class="fa fa-edit"></i>
+                                                <a href="{{route('admin.editCategories',[$type,$categories->slug])}}" class="dropdown-item"><i class="fa fa-edit"></i>
                                                     {{__('admin/category/main.edit') .$categories->name}}</a>
                                                 </button>
                                             <!--status action-->

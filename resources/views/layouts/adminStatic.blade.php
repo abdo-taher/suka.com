@@ -65,6 +65,16 @@
     @yield('viewCat')
     @yield('detailCat')
     @yield('editCat')
+  <!--brands-->
+    @yield('addBrand')
+    @yield('viewBrand')
+    @yield('detailBrand')
+    @yield('editBrand')
+  <!--product-->
+    @yield('addProduct')
+    @yield('viewProduct')
+    @yield('detailProduct')
+    @yield('editProduct')
   <!-- /.content-wrapper -->
   @include('dashbord.includes.footer')
   <!-- Control Sidebar -->

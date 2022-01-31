@@ -24,7 +24,7 @@
 
         <!-- Main content -->
         <div>
-            <form method="POST"  action="{{route('admin.updateCategories',$category->id)}}" enctype="multipart/form-data">
+            <form method="POST"  action="{{route('admin.updateCategories',[$type,$category[0]->id])}}" enctype="multipart/form-data">
                 <hr>
                 @csrf
                 @if($type == "sub")
@@ -35,8 +35,8 @@
                             <div class="form-group">
                                 <select name="parent_id" class="form-control select2bs4" style="width: 100%;">
                                     <option selected="selected">{{__('admin/category/add.mainCategoryPh')}}</option>
-                                    @foreach($allCategory as $categories)
-                                        <option {{$categories->id == $category->id ? "selected" : ""}} value="{{$categories ->id}}" >{{$categories -> name}}</option>
+                                    @foreach($catSelect as $categories)
+                                        <option {{$category[0]->id == $categories->id ? "selected" : ""}} value="{{$categories ->id}}" >{{$categories -> name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -50,9 +50,8 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label class="col-12 text-center">{{__("admin/category/add.Slug")}}</label>
-                        <input value="{{$category->slug}}"  name="slug" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__('admin/category/add.slug_ph')}}">
-                        <input value="{{$category->admin_create}}" hidden  name="admin_create" value="{{Auth::user()->name}}">
-                        <input hidden name="type" value="{{$type}}">
+                        <input value="{{$category[0]->slug}}"  name="slug" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__('admin/category/add.slug_ph')}}">
+                        <input value="{{$category[0]->admin_create}}" hidden  name="admin_create" value="{{Auth::user()->name}}">
                         @error ("slug")
                         <div class="alert alert-danger">{{$message}}</div>
                         @enderror
@@ -62,7 +61,7 @@
                     <div class="input-group">
                         <label class="col-12 text-center">{{__("admin/category/add.image-cat")}}</label>
                         <div class="custom-file">
-                            <input value="{{$category->image}}" name="image"  class="custom-file-input" id="exampleInputFile"  type="file" >
+                            <input value="{{$category[0]->image}}" name="image"  class="custom-file-input" id="exampleInputFile"  type="file" >
                             <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                         </div>
                         <div class="input-group-append">
@@ -74,14 +73,14 @@
                     @enderror
                 </div>
                 <hr>
-                @foreach($catTrans as $key => $category)
+                @foreach($catTrans as $key => $categories)
                     <section class="content">
                         <div class="container-fluid">
                             <!-- add cat -->
                             <div class="card card-default">
                                 <div class="card-header">
                                     <h3 class="card-title">
-                                        {{__('admin/category/add.' . $category->locale . '_' .$type)}}</h3>
+                                        {{__('admin/category/add.' . $categories->locale . '_' .$type)}}</h3>
 
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
@@ -94,15 +93,15 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>{{__("admin/category/add.name")}}</label>
-                                                <input value="{{$category->name}}"  name="category[{{$key}}][name]" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__("admin/category/add.name_ph")}}">
-                                                <input value="{{$category->id}}"  name="category[{{$key}}][id]" type="text">
+                                                <input value="{{$categories->name}}"  name="category[{{$key}}][name]" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__("admin/category/add.name_ph")}}">
+                                                <input hidden value="{{$categories->id}}"  name="category[{{$key}}][id]" type="text">
                                                 {{--                                        @error ("name")--}}
                                                 {{--                                        <div class="alert alert-danger">{{$message}}</div>--}}
                                                 {{--                                        @enderror--}}
                                             </div>
                                             <div class="form-group">
                                                 <label>{{__("admin/category/add.description")}}</label>
-                                                <input  value="{{$category->description}}" name="category[{{$key}}][description]" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__("admin/category/add.description_ph")}}">
+                                                <input  value="{{$categories->description}}" name="category[{{$key}}][description]" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__("admin/category/add.description_ph")}}">
                                                 {{--                                        @error ("name")--}}
                                                 {{--                                        <div class="alert alert-danger">{{$message}}</div>--}}
                                                 {{--                                        @enderror--}}
@@ -114,7 +113,7 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <span class="font-weight-bold bg-warning"><i class="note-icon-eraser"></i>{{__("admin/category/add.notice_locale")}}</span>
-                                    <span>{{__("admin/category/add.notice_locale_contact_" . $category->locale )}}</span>
+                                    <span>{{__("admin/category/add.notice_locale_contact_" . $categories->locale )}}</span>
 
                                 </div>
                             </div>
@@ -126,6 +125,7 @@
                     <button type="submit" class="btn btn-success">{{__("admin/category/add.submit")}}</button>
                     {{--                <button  class="btn btn-danger float-right"><a href="{{redirect()->back()}}"></a>{{__("admin/category/add.Cancel")}}</button>--}}
                 </div>
+                <input name="id">
             </form>
 
             <!-- /.content -->

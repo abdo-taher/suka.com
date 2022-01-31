@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 use App\Http\Controllers\Dashbord\AdminLoginController;
+use App\Http\Controllers\Dashbord\brandController;
 use App\Http\Controllers\Dashbord\DashbordConrtroller;
-use App\Http\Controllers\Dashbord\LanguagesController;
 use App\Http\Controllers\Dashbord\MainCategories;
 use App\Http\Controllers\Dashbord\subCagegories;
 use App\Http\Controllers\Dashbord\vendorsController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use \Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -50,12 +49,28 @@ Route::post('checkLogin', [AdminLoginController::class, 'checkLogin'])->name('ad
         Route::get('/type/{type?}/{action?}', [MainCategories::class, 'select'])     ->name('admin.selectCategories');
         Route::get('/detail/{type?}/{id?}', [MainCategories::class, 'detail'])     ->name('admin.detailCategories');
         Route::get('/create/{type?}', [MainCategories::class, 'createForm'])     ->name('admin.createFormCategories');
-        Route::post('/store', [MainCategories::class, 'storeDb'])        ->name('admin.storeCategories');
-        Route::get('edit/{type?}/{id?}', [MainCategories::class, 'editForm'])    ->name('admin.editCategories');
-        Route::post('/update/{id?}', [MainCategories::class, 'updateDb'])->name('admin.updateCategories');
+        Route::post('/store/{type?}', [MainCategories::class, 'storeDb'])        ->name('admin.storeCategories');
+        Route::get('edit/{type?}/{slug?}', [MainCategories::class, 'editForm'])    ->name('admin.editCategories');
+        Route::post('/update/{type?}/{id?}', [MainCategories::class, 'updateDb'])->name('admin.updateCategories');
         Route::get('/delete/{type?}/{id?}', [MainCategories::class, 'delete'])   ->name('admin.deleteCategories');
         Route::get('/isActive/{type?}/{id?}', [MainCategories::class, 'isActive'])->name('admin.activeCategories');
     });
+
+    // brands routes
+
+    Route::group(['prefix' => 'brand'],function(){
+
+        Route::get('/', [brandController::class, 'view'])                 ->name('admin.brands');
+        Route::get('/type/{action?}', [brandController::class, 'select'])     ->name('admin.selectBrands');
+        Route::get('/detail/{id?}', [brandController::class, 'detail'])     ->name('admin.detailBrands');
+        Route::get('/create', [brandController::class, 'createForm'])     ->name('admin.createFormBrands');
+        Route::post('/store', [brandController::class, 'storeDb'])        ->name('admin.storeBrands');
+        Route::get('edit/{id?}', [brandController::class, 'editForm'])    ->name('admin.editBrands');
+        Route::post('/update/{id?}', [brandController::class, 'updateDb'])->name('admin.updateBrands');
+        Route::get('/delete/{id?}', [brandController::class, 'delete'])   ->name('admin.deleteBrands');
+        Route::get('/isActive/{id?}', [brandController::class, 'isActive'])->name('admin.activeBrands');
+    });
+
     Route::group(['prefix' => 'vendors'],function(){
 
         Route::get('/', [vendorsController::class, 'view'])                       ->name('admin.vendors');
