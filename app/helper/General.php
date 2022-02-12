@@ -21,7 +21,10 @@ function uploadeImage($folder,$image){
 }
 
 function status($vall){
-    return $vall == 1 ? 'active' : 'inactive';
+    return $vall == 1 ? 'is_active' : 'is_inactive';
+}
+function statusSetting($vall){
+    return $vall == 0 ? 'active' : 'inactive';
 }
 
 function statusColor($vall){

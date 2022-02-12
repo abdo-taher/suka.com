@@ -14,8 +14,10 @@ class CreateAttributesTable extends Migration
     public function up()
     {
         Schema::create('attributes', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+            $table ->increments('id');
+            $table ->string('slug')->unique();
+            $table ->boolean('is_active')->nullable()->default('1');
+            $table ->timestamps();
         });
     }
 

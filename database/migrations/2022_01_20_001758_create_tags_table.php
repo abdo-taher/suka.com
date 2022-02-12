@@ -19,6 +19,7 @@ class CreateTagsTable extends Migration
             $table ->integer('category_id')->nullable()->unsigned();
             $table ->integer('product_id')->nullable()->unsigned();
             $table ->integer('brand_id')->nullable()->unsigned();
+            $table ->boolean('is_active')->nullable()->default('1');
             $table->unique(['category_id','product_id','brand_id']);
             $table ->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table ->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

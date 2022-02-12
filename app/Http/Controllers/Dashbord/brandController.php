@@ -42,11 +42,10 @@ class brandController extends Controller
     }
     public function editForm($id){
         try{
-            $category  = Brand::select()->find($id);
-            if($category){
-                $allbrand = Brand::orderBy('id', 'DESC')->get();
-                $brandTrans = BrandTranslation::where('category_id',$id)->select()->get();
-                return view('dashbord.brands.edit',compact(['brandTrans','allbrand']));
+            if($id){
+                $brand  = Brand::select()->find($id);
+                $brandTrans = BrandTranslation::where('brand_id',$id)->select()->get();
+                return view('dashbord.brands.edit',compact(['brandTrans','brand']));
             }
         }catch(Exception $ex){
             $alert = __('admin.error-brand-edit') ;
@@ -76,12 +75,11 @@ class brandController extends Controller
             }
             DB::commit();
             BrandTranslation::insert($brands);
-            $alert = __('admin/category/add.success-cat-add');
+            $alert = __('admin/brand/add.success-cat-add');
             return redirect()->route('admin.brands')->with(['success' => $alert]);
         }catch(\Exception $ex){
-            return $ex;
             DB::rollback();
-            $alert = __('admin/category/add.error-cat-add');
+            $alert = __('admin/brand/add.error-cat-add');
             return redirect()->route('admin.categories')->with(['error' => $alert]);
         }
     }
@@ -89,37 +87,34 @@ class brandController extends Controller
 
         try{
             if($id){
-                $updateCat = Category::find($id);
-                $updateCat->update($request->except(['_token','category','type','image']));
+                $updateCat = Brand::find($id);
+                $updateCat->update($request->except(['_token','brand','type','image']));
                 if(isset($request -> image )){
-                    $filePath = $request->has('image') ? uploadeImage('mainCategory',$request->image) : '' ;
-                    $updateCat->update(['image'=>$filePath]);
+                    $request->image = $request->has('image') ? uploadeImage('mainCategory',$request->image) : '' ;
                 }
 
-                foreach($request->category as  $category){
-                    CategoryTranslation::where('id',$category['id'])->update([
-                        'name'=>$category['name'],
-                        'description'=> $category['description']
+                foreach($request->brand as  $brand){
+                    BrandTranslation::where('id',$brand['id'])->update([
+                        'name'=>$brand['name'],
+                        'description'=> $brand['description']
                     ]);
                 }
                 $alert = __('admin.success-cat-add') ;
-                return dd($request->query());
-                return redirect()->route('admin.categories',$request->type)->with(['success' => $alert]);
+                return redirect()->route('admin.brands')->with(['success' => $alert]);
             }
         }catch(\Exception $ex){
-            return $ex;
             $alert = __('admin.error-cat-edit') ;
-            return redirect()->route('admin.categories',$request->type)->with(['error'=>$alert]);
+            return redirect()->route('admin.brands')->with(['error'=>$alert]);
         }
     }
-    public function isActive($type , $id){
-        $category = Category::find($id);
-        if(!$category){
+    public function isActive($id){
+        $brand = Brand::find($id);
+        if(!$brand){
             return redirect()->route('admin.error');
         }
         try{
-            $active = $category -> is_active == 1 ? 0 : 1 ;
-            Category::where('id',$id)->update(['is_active' => $active]);
+            $active = $brand -> is_active == 1 ? 0 : 1 ;
+            Brand::where('id',$id)->update(['is_active' => $active]);
             $alert = __('admin.success-cat-active') ;
             return redirect()->back()->with(['success' => $alert]);
         }catch(\Exception $ex){

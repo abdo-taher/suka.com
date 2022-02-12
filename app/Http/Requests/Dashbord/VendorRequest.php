@@ -25,15 +25,14 @@ class VendorRequest extends FormRequest
     {
         return[
 
-            'logo' => 'required_without:id|mimes:png,jpg,jpeg',
-            'name' => 'required',
-            'email' => 'required|email|unique:vendors,email,'.$this -> id,
-            'mobile' => 'required|numeric|required_without:id|unique:vendors,mobile,'.$this -> id,
-            'address' => 'required',
-            'category_id' => 'required|exists:mainCategories,id',
-            'vat_number' => 'max:13',
-            'password' => 'required_without:id',
-            'password_confirmation' => 'required_with:password_confirmation|same:password|required_without:id',
+            'slug' => 'required|unique:vendors,slug,'.$this -> id,
+            'firstName'=> 'required_with:add',
+            'lastName' => 'required_with:add',
+            'store_name' => 'required|unique:vendors,store_name,'.$this -> id,
+            'email' => 'required_with:add|email|unique:vendors,email,'.$this -> id,
+            'work_phone' => 'required_with:add|numeric|unique:vendors,home_phone,'.$this -> id,
+            'address' => 'required_with:add',
+            'category_id' => 'required_with:add|exists:Categories,id',
 
 
         ];

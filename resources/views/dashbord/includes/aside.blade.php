@@ -97,13 +97,13 @@
             </a>
             <ul class="nav nav-treeview">
             <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="{{route('admin.vendors')}}" class="nav-link">
                     <i class="far fa-eye nav-icon"></i>
                     <p>{{__('admin/aside.View-vendors')}}</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="{{route('admin.createFormVendors')}}" class="nav-link">
                     <i class="far fa-plus-square nav-icon"></i>
                     <p>{{__('admin/aside.add-vendors')}}</p>
                 </a>
@@ -243,13 +243,13 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="pages/layout/top-nav.html" class="nav-link">
+                        <a href="{{route('admin.tags')}}" class="nav-link">
                             <i class="far fa-eye nav-icon"></i>
                             <p>{{__('admin/aside.View-tags')}}</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                        <a href="{{route('admin.createFormTags')}}" class="nav-link">
                             <i class="far fa-plus-square nav-icon"></i>
                             <p>{{__('admin/aside.add-tags')}}</p>
                         </a>
@@ -268,7 +268,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="pages/layout/top-nav.html" class="nav-link">
+                        <a href="{{route('admin.createFormTags')}}#custom-tabs-three-Category" class="nav-link">
                             <i class="far fa-eye nav-icon"></i>
                             <p>{{__('admin/aside.View-attriburts')}}</p>
                         </a>

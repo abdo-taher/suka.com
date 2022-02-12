@@ -70,11 +70,21 @@
     @yield('viewBrand')
     @yield('detailBrand')
     @yield('editBrand')
+  <!--vendors-->
+    @yield('addVendor')
+    @yield('viewVendor')
+    @yield('detailVendor')
+    @yield('editVendor')
   <!--product-->
     @yield('addProduct')
     @yield('viewProduct')
     @yield('detailProduct')
     @yield('editProduct')
+  <!--tag-->
+    @yield('addTag')
+    @yield('viewTag')
+    @yield('detailTag')
+    @yield('editTag')
   <!-- /.content-wrapper -->
   @include('dashbord.includes.footer')
   <!-- Control Sidebar -->

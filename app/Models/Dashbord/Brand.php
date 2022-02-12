@@ -26,5 +26,8 @@ class brand extends Model
 
         return $this->getForeignKey();
     }
+    public function brandTag(){
+        return $this -> hasMany(Tag::class,'brand_id','id');
+    }
 
 }

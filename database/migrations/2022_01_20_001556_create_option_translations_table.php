@@ -18,6 +18,7 @@ class CreateOptionTranslationsTable extends Migration
             $table ->integer('option_id')->unsigned();
             $table ->string('locale');
             $table ->string('name');
+            $table ->string('description')->nullable();
             $table ->unique(['option_id','locale']);
             $table ->foreign('option_id')->references('id')->on('options')->onDelete('cascade');
             $table ->timestamps();

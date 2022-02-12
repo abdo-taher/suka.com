@@ -19,9 +19,11 @@ class Authenticate extends Middleware
 
             if(FacadesRequest::is('admin/*')){
                 return route('admin.login');
+            }elseif (FacadesRequest::is('admin')){
+                return route('admin.login');
             }else{
-            return route('login');
-        }
+                return route('login');
+            }
         }
     }
 }

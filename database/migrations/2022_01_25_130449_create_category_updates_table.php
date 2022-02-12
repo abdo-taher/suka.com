@@ -15,8 +15,7 @@ class CreateCategoryUpdatesTable extends Migration
     {
         Schema::create('category_updates', function (Blueprint $table) {
             $table ->increments('id');
-            $table ->string('update_from');
-            $table ->string('update_to');
+            $table ->string('updates');
             $table ->integer('category_id')->unsigned();
             $table ->integer('admin_create')->unsigned();
             $table ->unique(['category_id','admin_create']);

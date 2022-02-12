@@ -15,8 +15,7 @@ class CreateProductUpdatesTable extends Migration
     {
         Schema::create('product_updates', function (Blueprint $table) {
             $table ->increments('id');
-            $table ->string('update_from');
-            $table ->string('update_to');
+            $table ->string('updates');
             $table ->integer('admin_create')->unsigned();
             $table ->integer('product_id')->unsigned();
             $table ->unique(['admin_create','product_id']);

@@ -18,7 +18,9 @@ class CreateAttributeTranslationsTable extends Migration
             $table ->integer('attribute_id');
             $table ->string('locale');
             $table ->string('name');
+            $table ->string('description')->nullable();
             $table ->unique(['attribute_id','locale']);
+            $table ->timestamps();
         });
     }
 

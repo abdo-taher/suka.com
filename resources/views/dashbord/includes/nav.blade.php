@@ -6,7 +6,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">{{__("admin/nav.Home")}}</a>
+        <a href="{{route('Dashbord')}}" class="nav-link">{{__("admin/nav.Home")}}</a>
       </li>
     </ul>
 
@@ -23,7 +23,7 @@
     </form>
 
     <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto mr-3">
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
@@ -111,11 +111,12 @@
       <!--  Dropdown Menu languages -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                <i class="flag-icon flag-icon-us"></i>
+                <i class="flag-icon flag-icon-{{ appLocale() == 'en' ? 'us' : 'eg'}}"></i>
             </a>
-            <div class="dropdown-menu dropdown-menu-right p-0" style="">
+            <div class="dropdown-menu dropdown-menu-right" style="">
                 @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                        <a class="dropdown-item active" rel="alternate" hreflang="{{ $localeCode }}" href="{{ \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                        <a class="dropdown-item {{$properties['native'] == appLocale() ? 'active' : ''}}" rel="alternate" hreflang="{{ $localeCode }}"
+                           href="{{ \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                             <i class="flag-icon flag-icon-{{ $properties['native'] == 'English' ? 'us' : 'eg'}} "></i>
                             {{ $properties['name']}}
                         </a>

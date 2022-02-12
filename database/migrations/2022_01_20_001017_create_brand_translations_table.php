@@ -17,9 +17,10 @@ class CreateBrandTranslationsTable extends Migration
             $table ->increments('id');
             $table ->integer('brand_id');
             $table ->string('locale');
-            $table ->text('photo');
             $table ->string('name');
+            $table ->string('description');
             $table ->unique(['brand_id','locale']);
+            $table ->timestamps();
         });
     }
 

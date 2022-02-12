@@ -11,7 +11,7 @@ class Category extends Model
     use Translatable;
 
     protected $with = ['translations'];
-    protected  $translatedAttributes = ['name','description','locale'];
+    protected $translatedAttributes = ['name','description','locale'];
     protected $table = 'categories';
     protected $fillable =['parent_id','slug','is active','image','admin_create'];
     protected $hidden = ['translations'];
@@ -46,6 +46,9 @@ class Category extends Model
         }
 
         return $this->getForeignKey();
+    }
+    public function categoryTag(){
+        return $this -> hasMany(Category::class,'category_id','id');
     }
 
 }

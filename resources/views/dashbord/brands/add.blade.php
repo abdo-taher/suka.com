@@ -1,4 +1,7 @@
 @extends('layouts.adminStatic')
+@section('title')
+    {{__('admin/brand.index_title_add')}}
+@endsection
 @section('addBrand')
 
     <div class="content-wrapper">
@@ -7,12 +10,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>{{__('admin/brand/add.add-brand')}}</h1>
+                        <h1>{{__('admin/brand.add_heading')}}</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('Dashbord')}}">{{__('admin/brand/add.home')}}</a></li>
-                            <li class="breadcrumb-item active">{{__('admin/brand/add.brand')}}</li>
+                            <li class="breadcrumb-item"><a href="{{route('Dashbord')}}">{{__('admin/brand.home')}}</a></li>
+                            <li class="breadcrumb-item active"><a href="{{route('admin.brands')}}">{{__('admin/brand.brand')}}</a></li>
+                            <li class="breadcrumb-item">{{__('admin/brand.add')}}</li>
                         </ol>
                     </div>
 
@@ -27,8 +31,8 @@
             @csrf
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="col-12 text-center">{{__("admin/brand/add.Slug")}}</label>
-                    <input  name="slug" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__('admin/brand/add.slug_ph')}}">
+                    <label class="col-12 text-center">{{__("admin/brand.slug")}}</label>
+                    <input  name="slug" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__('admin/brand.slug_ph')}}">
                     <input hidden  name="admin_create" value="{{Auth::user()->name}}">
                     @error ("slug")
                     <blockquote class="quote-danger">
@@ -39,13 +43,13 @@
             </div>
             <div class="col-md-12">
                 <div class="input-group">
-                    <label class="col-12 text-center">{{__("admin/brand/add.image-brand")}}</label>
+                    <label class="col-12 text-center">{{__("admin/brand.image")}}</label>
                     <div class="custom-file">
                         <input name="image"  class="custom-file-input" id="exampleInputFile"  type="file" >
-                        <label class="custom-file-label" for="exampleInputFile">{{__('admin/brand/add.Choose_file')}}</label>
+                        <label class="custom-file-label" for="exampleInputFile">{{__('admin/brand.Choose_file')}}</label>
                     </div>
                     <div class="input-group-append">
-                        <span class="input-group-text" id="">{{__('admin/brand/add.upload_file')}}</span>
+                        <span class="input-group-text" id="">{{__('admin/brand.upload_file')}}</span>
                     </div>
                 </div>
                 @error ("image")
@@ -62,7 +66,7 @@
                     <div class="card card-default">
                         <div class="card-header">
                             <h3 class="card-title">
-                                {{__('admin/brand/add.' . $localeCode . '_add')}}</h3>
+                                {{__('admin/brand.' . $localeCode . '_add')}}</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
@@ -74,16 +78,16 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>{{__("admin/brand/add.name")}}</label>
-                                        <input  name="brand[{{$localeCode}}][name]" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__("admin/brand/add.name_ph_". $localeCode)}}">
+                                        <label>{{__("admin/brand.name")}}</label>
+                                        <input  name="brand[{{$localeCode}}][name]" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__("admin/brand.name_ph_". $localeCode)}}">
                                         <input hidden name="brand[{{$localeCode}}][locale]"  value="{{$localeCode}}">
                                         @error ("brand[ar][locale]")
                                         <span class="danger">{{$message}}</span>
                                         @enderror
                                     </div>
                                         <div class="form-group">
-                                        <label>{{__("admin/brand/add.description")}}</label>
-                                        <input  name="brand[{{$localeCode}}][description]" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__("admin/brand/add.description_ph_" . $localeCode)}}">
+                                        <label>{{__("admin/brand.description")}}</label>
+                                        <input  name="brand[{{$localeCode}}][description]" type="text" class="form-control" id="exampleInputEmail1" placeholder="{{__("admin/brand.description_ph_" . $localeCode)}}">
                                         @error ("brand[{{$localeCode}}][description]")
                                         <div class="alert alert-danger">{{$message}}</div>
                                         @enderror
@@ -94,8 +98,8 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <span class="font-weight-bold bg-warning"><i class="note-icon-eraser"></i>{{__("admin/brand/add.notice_locale")}}</span>
-                            <span>{{__("admin/brand/add.notice_locale_contact_" . $localeCode )}}</span>
+                            <span class="font-weight-bold bg-warning"><i class="note-icon-eraser"></i>{{__("admin/brand.notice_locale")}}</span>
+                            <span>{{__("admin/brand.notice_locale_contact_" . $localeCode )}}</span>
 
                         </div>
                     </div>
@@ -104,8 +108,8 @@
             </section>
             @endforeach
             <div class="card-footer">
-                <button type="submit" class="btn btn-success">{{__("admin/brand/add.submit")}}</button>
-                <a  class="btn btn-danger float-right" href="{{route('Dashbord')}}">{{__("admin/brand/add.Cancel")}}</a>
+                <button type="submit" class="btn btn-primary">{{__("admin/brand.add")}}</button>
+                <a  class="btn btn-danger float-right" href="{{route('Dashbord')}}">{{__("admin/brand.Cancel")}}</a>
             </div>
         </form>
 
